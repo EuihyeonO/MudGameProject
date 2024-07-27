@@ -95,7 +95,17 @@ namespace C_Study
         {
             WPType = WeaponType.Spear;
             WPName = "오래된 창";
-            AttPower = 10;
+            AttPower = 15;
+        }
+    }
+
+    public class OldHammer : Hammer
+    {
+        public OldHammer()
+        {
+            WPType = WeaponType.Hammer;
+            WPName = "오래된 망치";
+            AttPower = 30;
         }
     }
 }

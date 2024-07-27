@@ -40,6 +40,11 @@ namespace C_Study
             }
         }
 
+        public void End()
+        {
+
+        }
+
         private void StartLevelUpdate()
         {
             while (_levelType == LevelType.Start)
@@ -107,6 +112,11 @@ namespace C_Study
                 string input = Console.ReadLine();
 
                 if (DevFunctions.IsNumeric(input) == false)
+                {
+                    continue;
+                }
+
+                if(input.Length > 1)
                 {
                     continue;
                 }

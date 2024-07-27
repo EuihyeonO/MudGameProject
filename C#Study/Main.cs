@@ -12,12 +12,10 @@ class MainClass
 {
     public static void Main()
     {
-        OldSword NewSwor = new OldSword();
-
         GameCore gameCore = new GameCore();
+        
         gameCore.Start();
         gameCore.Update();
-
-
+        gameCore.End();
     }
 }

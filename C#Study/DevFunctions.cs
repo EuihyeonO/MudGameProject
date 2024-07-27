@@ -15,14 +15,12 @@ namespace C_Study
                 return false;
             }
 
-            if (str.Length > 1)
+            foreach (char curChar in str)
             {
-                return false;
-            }
-
-            if (char.IsDigit(str[0]) == false)
-            {
-                return false;
+                if (char.IsDigit(curChar) == false)
+                {
+                    return false;
+                }
             }
 
             return true;
