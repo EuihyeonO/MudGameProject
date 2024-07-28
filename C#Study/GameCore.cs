@@ -13,30 +13,31 @@ namespace C_Study
     public enum LevelType
     {
         Start,
+        Setting,
+        Menu,
         Play,
     }
 
     public class GameCore
     {
+
         public void Start()
         {
             _player = new Player();
             _levelType = LevelType.Start;
+
+            _levels = new Dictionary<LevelType, GameLevel>();
+
+            _levels.Add(LevelType.Start, new StartLevel(this));
+            _levels.Add(LevelType.Setting, new SettingLevel(this));
+            _levels.Add(LevelType.Menu, new MenuLevel(this));
         }
 
         public void Update()
         {
-            while(_player != null)
+            while (_player != null)
             {
-                switch (_levelType)
-                {
-                    case LevelType.Start:
-                        StartLevelUpdate();
-                        break;
-                    case LevelType.Play:
-                        PlayLevelUpdate();
-                        break;
-                }
+                _levels[_levelType].Update();
             }
         }
 
@@ -45,88 +46,20 @@ namespace C_Study
 
         }
 
-        private void StartLevelUpdate()
+        public LevelType CurrentLevel
         {
-            while (_levelType == LevelType.Start)
-            {
-                Console.Clear();
-
-                Console.WriteLine("*************************************************");
-                Console.WriteLine("*************************************************");
-               
-                Console.Write("*****************");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("전사의 모험 RPG");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("*****************");
-
-                Console.Write("******************");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("제작자 오의현");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("******************");
-
-                Console.WriteLine("*************************************************");
-                Console.WriteLine("*************************************************");
-                Console.WriteLine();
-
-                Console.WriteLine("모험을 시작하시겠습니까?");
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("1 : YES");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("2 : NO");
-                Console.ForegroundColor = ConsoleColor.White;
-
-                string input = Console.ReadLine();
-
-                if (DevFunctions.IsNumeric(input) == false)
-                {
-                    continue;
-                }
-
-                int toInt = int.Parse(input);
-
-                switch (toInt)
-                {
-                    case 1:
-                        _levelType = LevelType.Play;
-                        break;
-                    case 2:
-                        Environment.Exit(0);
-                        break;
-                }
-            }
+            set { _levelType = value; }
         }
-        private void PlayLevelUpdate()
+
+        public Player CurrentPlayer
         {
-            while (_levelType == LevelType.Play)
-            {
-                Console.Clear();
-
-                Console.WriteLine("**************************************************");
-                Console.WriteLine("*****시작*****");
-                Console.WriteLine("**************************************************");
-                Console.WriteLine();
-
-                string input = Console.ReadLine();
-
-                if (DevFunctions.IsNumeric(input) == false)
-                {
-                    continue;
-                }
-
-                if(input.Length > 1)
-                {
-                    continue;
-                }
-
-                int toInt = int.Parse(input);
-            }
+            get { return _player; }
         }
 
         private Player _player;
         private LevelType _levelType;
+
+        private Dictionary<LevelType, GameLevel> _levels;
     }
 }
 

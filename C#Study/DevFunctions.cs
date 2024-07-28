@@ -25,5 +25,19 @@ namespace C_Study
 
             return true;
         }
+
+        public static void WriteColored(string str, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(str);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void WriteLineColored(string str, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(str);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }

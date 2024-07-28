@@ -23,31 +23,30 @@ namespace C_Study
         {
 
         }
-
-        protected WeaponType WPType
+        public WeaponType WPType
         {
             get { return _wpType;  }
-            set { _wpType = value; }
+            protected set { _wpType = value; }
         }
 
-        protected string WPName
+        public string WPName
         {
             get { return _wpName; }
-            set { _wpName = value; }
+            protected set { _wpName = value; }
         }
-        protected int AttPower
+        public int AttPower
         {
             get { return _attPower; }
-            set { _attPower = value; }
+            protected set { _attPower = value; }
         }
-        protected float BonusAttackProb
+        public float CriticalProb
         {
-            get { return _bonusAttackprob; }
-            set { _bonusAttackprob = value; }
+            get { return _criticalProb; }
+            protected set { _criticalProb = value; }
         }
 
         private int _attPower;
-        private float _bonusAttackprob;
+        private float _criticalProb;
 
         private string _wpName;
         private WeaponType _wpType;
@@ -58,8 +57,16 @@ namespace C_Study
         protected Sword()
         {
             WPType = WeaponType.Sword;
-            BonusAttackProb = 25.0f;
+            CriticalProb = 25.0f;
         }
+
+        protected float BleedingProb
+        { 
+            get { return _bleedingProb; }
+            set { _bleedingProb = value; }  
+        }
+
+        private float _bleedingProb;
     }
 
     public class Spear : Weapon
@@ -67,8 +74,16 @@ namespace C_Study
         protected Spear()
         {
             WPType = WeaponType.Spear;
-            BonusAttackProb = 15.0f;
+            CriticalProb = 15.0f;
         }
+
+        protected float EvadingProb
+        {
+            get { return _evadingProb; }
+            set { _evadingProb = value; }
+        }
+
+        private float _evadingProb;
     }
 
     public class Hammer : Weapon
@@ -76,8 +91,16 @@ namespace C_Study
         protected Hammer()
         {
             WPType = WeaponType.Hammer;
-            BonusAttackProb = 5.0f;
+            CriticalProb = 5.0f;
         }
+
+        protected float StunProb
+        {
+            get { return _stunProb; }
+            set { _stunProb = value; }
+        }
+
+        private float _stunProb;
     }
 
     public class OldSword : Sword
@@ -86,6 +109,7 @@ namespace C_Study
         {
             WPName = "오래된 검";
             AttPower = 10;
+            BleedingProb = 5.0f;
         }
     }
 
@@ -93,9 +117,9 @@ namespace C_Study
     {
         public OldSpear()
         {
-            WPType = WeaponType.Spear;
             WPName = "오래된 창";
             AttPower = 15;
+            EvadingProb = 10.0f;
         }
     }
 
@@ -103,9 +127,9 @@ namespace C_Study
     {
         public OldHammer()
         {
-            WPType = WeaponType.Hammer;
             WPName = "오래된 망치";
             AttPower = 30;
+            StunProb = 5.0f;
         }
     }
 }
