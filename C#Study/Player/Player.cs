@@ -28,6 +28,8 @@ namespace C_Study
 
             _weaponSkilled = 1;
 
+            _money = 0;
+
             _inventory = new List<Item>();
         }
 
@@ -80,7 +82,10 @@ namespace C_Study
         {
             get { return _currentEXP; }
         }
-
+        public int Money
+        {
+            get { return _money; }
+        }
 
         public float CriticalPower
         {
@@ -114,6 +119,8 @@ namespace C_Study
 
         private int _maxEXP;
         private int _currentEXP;
+
+        private int _money;
 
         List<Item> _inventory;
     }

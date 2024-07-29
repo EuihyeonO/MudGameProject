@@ -8,7 +8,6 @@ namespace C_Study
 {
     public class SettingLevel : GameLevel
     {
-
         public SettingLevel(GameCore parrentCore)
         {
             _parentCore = parrentCore;

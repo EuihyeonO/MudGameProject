@@ -36,16 +36,27 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DevFunctions.cs" />
-    <Compile Include="GameCore.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="Level\GameLevel.cs" />
-    <Compile Include="Level\MenuLevel.cs" />
-    <Compile Include="Level\SettingLevel.cs" />
-    <Compile Include="Level\StartLevel.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="Utility\DevFunctions.cs" />
+    <Compile Include="Core\GameCore.cs" />
+    <Compile Include="Item\Base\Item.cs" />
+    <Compile Include="Item\Child\Apple.cs" />
+    <Compile Include="Level\Base\GameLevel.cs" />
+    <Compile Include="Level\Child\MenuLevel.cs" />
+    <Compile Include="Level\Child\SettingLevel.cs" />
+    <Compile Include="Level\Child\StartLevel.cs" />
+    <Compile Include="Main\Main.cs" />
+    <Compile Include="Monster\Base\Monster.cs" />
+    <Compile Include="Player\Player.cs" />
+    <Compile Include="Weapon\Base\Hammer.cs" />
+    <Compile Include="Weapon\Base\Spear.cs" />
+    <Compile Include="Weapon\Base\Sword.cs" />
+    <Compile Include="Weapon\Base\Weapon.cs" />
+    <Compile Include="Weapon\Child\OldHammer.cs" />
+    <Compile Include="Weapon\Child\OldSpear.cs" />
+    <Compile Include="Weapon\Child\OldSword.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Monster\Child\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

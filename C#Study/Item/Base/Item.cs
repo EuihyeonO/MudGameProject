@@ -17,6 +17,7 @@ namespace C_Study
             get { return _attPower; }
             protected set { _attPower = value; }
         }
+
         public int DefPower
         {
             get { return _defPower; }
@@ -28,31 +29,26 @@ namespace C_Study
             get { return _weaponSkilled; }
             protected set { _weaponSkilled = value; }
         }
-
         public int HealHP
         {
             get { return _healHP; }
             protected set { _healHP = value; }
         }
-
         public float CriticalPower
         {
             get { return _criticalPower; }
             protected set { _criticalPower = value; }
         }
-
         public float CriticalProb
         {
             get { return _criticalProb; }
             protected set { _criticalProb = value; }
         }
-
         public int RemainTurn
         {
             get { return _remainTurn; }
             protected set { _remainTurn = value; }
         }
-
 
         private int _attPower;
         private int _defPower;
@@ -64,12 +60,5 @@ namespace C_Study
 
         private int _healHP;
         private int _remainTurn;
-    }
-    public class Apple : Item
-    {
-        public Apple()
-        {
-            HealHP = 50;
-        }
     }
 }
