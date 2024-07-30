@@ -28,7 +28,7 @@ namespace C_Study
 
             _weaponSkilled = 1;
 
-            _money = 100;
+            _money = 1000;
 
             _inventory = new List<Item>();
         }

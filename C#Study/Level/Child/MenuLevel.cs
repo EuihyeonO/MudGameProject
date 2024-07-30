@@ -99,7 +99,7 @@ namespace C_Study
                     Console.Write(" 무기 숙련도 증가 {0},", item.WeaponSkilled);
                 }            
 
-                if (item.HealHP != 0)
+                if (item.RemainTurn != 0)
                 {
                     Console.Write(" 유지 기간 {0}턴", item.RemainTurn);
                 }
@@ -149,8 +149,10 @@ namespace C_Study
                     BuyItem(ItemName.사과);
                     break;
                 case 2:
+                    BuyItem(ItemName.배);
                     break;
                 case 3:
+                    BuyItem(ItemName.필살의영약);
                     break;
                 case 4:
                     _updateFunc = null;

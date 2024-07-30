@@ -9,7 +9,8 @@ namespace C_Study
     public enum ItemName
     {
         사과,
-
+        배,
+        필살의영약,
     }
 
     public class Item
@@ -20,6 +21,10 @@ namespace C_Study
             {
                 case ItemName.사과:
                     return (player.Money >= 30);
+                case ItemName.배:
+                    return (player.Money >= 50);
+                case ItemName.필살의영약:
+                    return (player.Money >= 200);
             }
 
             return false;
@@ -32,6 +37,14 @@ namespace C_Study
                 case ItemName.사과:
                     player.Inventory.Add(new Apple());
                     player.Money -= 30;
+                    break;
+                case ItemName.배:
+                    player.Inventory.Add(new Pear());
+                    player.Money -= 50;
+                    break;
+                case ItemName.필살의영약:
+                    player.Inventory.Add(new CriticalProbElixir());
+                    player.Money -= 200;
                     break;
             }
         }
