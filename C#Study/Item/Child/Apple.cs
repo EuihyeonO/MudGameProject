@@ -11,6 +11,9 @@ namespace C_Study
         public Apple()
         {
             HealHP = 50;
+            RemainTurn = 1;
+
+            Name = "사과";
         }
     }
 }

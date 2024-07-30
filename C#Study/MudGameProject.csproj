@@ -36,6 +36,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator\GameFunctions.cs" />
+    <Compile Include="Interface\ICreatureStat.cs" />
+    <Compile Include="Monster\Child\Goblin.cs" />
     <Compile Include="Utility\DevFunctions.cs" />
     <Compile Include="Core\GameCore.cs" />
     <Compile Include="Item\Base\Item.cs" />
@@ -55,8 +58,6 @@
     <Compile Include="Weapon\Child\OldSpear.cs" />
     <Compile Include="Weapon\Child\OldSword.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Monster\Child\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace C_Study
 {
-    public class Player
+    public class Player : ICreatureStat
     {
         public Player()
         {
@@ -28,7 +28,7 @@ namespace C_Study
 
             _weaponSkilled = 1;
 
-            _money = 0;
+            _money = 100;
 
             _inventory = new List<Item>();
         }
@@ -85,6 +85,7 @@ namespace C_Study
         public int Money
         {
             get { return _money; }
+            set { _money = value; }
         }
 
         public float CriticalPower

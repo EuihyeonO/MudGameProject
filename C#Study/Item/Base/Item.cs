@@ -6,12 +6,39 @@ using System.Threading.Tasks;
 
 namespace C_Study
 {
+    public enum ItemName
+    {
+        사과,
+
+    }
+
     public class Item
     {
+        public static bool isCanBuy(Player player, ItemName itemName)
+        {
+            switch(itemName)
+            {
+                case ItemName.사과:
+                    return (player.Money >= 30);
+            }
+
+            return false;
+        }
+
+        public static void BuyItem(Player player, ItemName itemName)
+        {
+            switch (itemName)
+            {
+                case ItemName.사과:
+                    player.Inventory.Add(new Apple());
+                    player.Money -= 30;
+                    break;
+            }
+        }
+
         protected Item()
         {
         }
-
         public int AttPower
         {
             get { return _attPower; }
@@ -49,6 +76,11 @@ namespace C_Study
             get { return _remainTurn; }
             protected set { _remainTurn = value; }
         }
+        public string Name
+        {
+            get { return _name; }
+            protected set { _name = value; }
+        }
 
         private int _attPower;
         private int _defPower;
@@ -60,5 +92,7 @@ namespace C_Study
 
         private int _healHP;
         private int _remainTurn;
+
+        private string _name;
     }
 }
