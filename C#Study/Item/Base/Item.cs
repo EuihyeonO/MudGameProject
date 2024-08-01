@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +14,20 @@ namespace C_Study
         필살의영약,
     }
 
-    public class Item
+    public class Item : IComparable<Item>
     {
+        int IComparable<Item>.CompareTo(Item other)
+        {
+            if(other.Name.CompareTo(Name) > 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         public static bool isCanBuy(Player player, ItemName itemName)
         {
             switch(itemName)
@@ -47,11 +60,15 @@ namespace C_Study
                     player.Money -= 200;
                     break;
             }
+
+           player.Inventory.Sort();
+
         }
 
         protected Item()
         {
         }
+
         public int AttPower
         {
             get { return _attPower; }

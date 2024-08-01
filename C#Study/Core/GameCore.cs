@@ -15,7 +15,7 @@ namespace C_Study
         Start,
         Setting,
         Menu,
-        Play,
+        Fight,
     }
 
     public class GameCore
@@ -31,6 +31,7 @@ namespace C_Study
             _levels.Add(LevelType.Start, new StartLevel(this));
             _levels.Add(LevelType.Setting, new SettingLevel(this));
             _levels.Add(LevelType.Menu, new MenuLevel(this));
+            _levels.Add(LevelType.Fight, new FightLevel(this));
         }
 
         public void Update()

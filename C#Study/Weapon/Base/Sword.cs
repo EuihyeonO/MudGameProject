@@ -12,7 +12,7 @@ namespace C_Study
         protected Sword()
         {
             WPType = WeaponType.Sword;
-            CriticalProb = 25.0f;
+            CriticalProb = 0.25f;
         }
 
         protected float BleedingProb

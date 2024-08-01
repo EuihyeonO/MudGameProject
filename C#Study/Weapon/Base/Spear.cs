@@ -12,7 +12,7 @@ namespace C_Study
         protected Spear()
         {
             WPType = WeaponType.Spear;
-            CriticalProb = 15.0f;
+            CriticalProb = 0.15f;
         }
 
         protected float EvadingProb

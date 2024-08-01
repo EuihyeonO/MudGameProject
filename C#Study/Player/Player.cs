@@ -20,11 +20,10 @@ namespace C_Study
             _maxEXP = 100;
             _currentEXP = 0;
 
-            _criticalPower = 150.0f;
-            _criticalProb = 5.0f;
+            _criticalPower = 1.5f;
+            _criticalProb = 0.05f;
 
             _level = 1;
-            _statPoint = 0;
 
             _weaponSkilled = 1;
 
@@ -33,10 +32,35 @@ namespace C_Study
             _inventory = new List<Item>();
         }
 
+        private void LevelUp()
+        {
+            _currentEXP -= _maxEXP;
+            DevFunctions.WriteLineColored("레벨이 상승하였습니다!\n", ConsoleColor.Cyan);
+
+            MaxEXP = (int)(_maxEXP * 1.1f);
+
+            _level++;
+
+            _attPower += 10;
+            _defPower += 2;
+        }
+
         public Weapon EquipedWeapon
         {
             get { return _equipedWeapon; }
-            set { _equipedWeapon = value; }
+            set 
+            {
+                if(_equipedWeapon != null)
+                {
+                    _attPower -= _equipedWeapon.AttPower;
+                    _criticalProb -= _equipedWeapon.CriticalProb;
+                }
+
+                _equipedWeapon = value;
+
+                _attPower += _equipedWeapon.AttPower;
+                _criticalProb += _equipedWeapon.CriticalProb;
+            }
         }
 
         public int AttPower
@@ -53,11 +77,6 @@ namespace C_Study
             get { return _level; }
         }
 
-        public int StatPoint
-        {
-            get { return _statPoint; }
-        }
-
         public int WeaponSkilled
         {
             get { return _weaponSkilled; }
@@ -70,17 +89,28 @@ namespace C_Study
 
         public int CurrentHP
         {
-            get { return _currentHP; }
+            get { return Math.Max(0, _currentHP); }
+            set { _currentHP = value; }
         }
 
         public int MaxEXP
         {
             get { return _maxEXP; }
+            set { _maxEXP = value; }
         }
 
         public int CurrentEXP
         {
             get { return _currentEXP; }
+            set 
+            {
+                _currentEXP = value;
+
+                if (_currentEXP >= _maxEXP)
+                {
+                    LevelUp();
+                }
+            }
         }
         public int Money
         {
@@ -92,11 +122,21 @@ namespace C_Study
         {
             get { return _criticalPower; }
         }
+        public float CriticalPower_100
+        {
+            get { return _criticalPower * 100; }
+        }
 
         public float CriticalProb
         {
             get { return _criticalProb; }
+            protected set{ _criticalProb = value; }
         }
+        public float CriticalProb_100 
+        {
+            get { return _criticalProb * 100; } 
+        }
+
         public List<Item> Inventory
         {
             get { return _inventory; }
@@ -111,7 +151,6 @@ namespace C_Study
         private float _criticalProb;
 
         private int _level;
-        private int _statPoint;
         private int _weaponSkilled;
 
         

@@ -40,6 +40,7 @@
     <Compile Include="Interface\ICreatureStat.cs" />
     <Compile Include="Item\Child\CriticalProbElixir.cs" />
     <Compile Include="Item\Child\Pear.cs" />
+    <Compile Include="Level\Child\FightLevel.cs" />
     <Compile Include="Monster\Child\Goblin.cs" />
     <Compile Include="Utility\DevFunctions.cs" />
     <Compile Include="Core\GameCore.cs" />

@@ -12,7 +12,7 @@ namespace C_Study
         protected Hammer()
         {
             WPType = WeaponType.Hammer;
-            CriticalProb = 5.0f;
+            CriticalProb = 0.05f;
         }
 
         protected float StunProb

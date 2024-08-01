@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,20 +42,26 @@ namespace C_Study
 
             Console.WriteLine("이름 : {0}  ", _parentCore.CurrentPlayer.EquipedWeapon.WPName);
             Console.WriteLine("공격력 : {0}  ", _parentCore.CurrentPlayer.EquipedWeapon.AttPower);
-            Console.WriteLine("크리티컬 확률 : {0}%  ", _parentCore.CurrentPlayer.EquipedWeapon.CriticalProb);
+            Console.WriteLine("크리티컬 확률 : {0}%  ", _parentCore.CurrentPlayer.EquipedWeapon.CriticalProb_100);
             Console.WriteLine();
 
             DevFunctions.WriteLineColored("플레이어 스탯 정보", ConsoleColor.DarkCyan);
             Console.WriteLine("레벨 : {0}  ", _parentCore.CurrentPlayer.Level);
-            Console.WriteLine("잔여 스탯 포인트 : {0}  ", _parentCore.CurrentPlayer.StatPoint);
-            Console.WriteLine("공격력 : {0} ({1} + {2})  ", _parentCore.CurrentPlayer.AttPower + _parentCore.CurrentPlayer.EquipedWeapon.AttPower, _parentCore.CurrentPlayer.AttPower, _parentCore.CurrentPlayer.EquipedWeapon.AttPower);
-            Console.WriteLine("크리티컬 확률 : {0} ({1} + {2})%  ", _parentCore.CurrentPlayer.CriticalProb + _parentCore.CurrentPlayer.EquipedWeapon.CriticalProb, _parentCore.CurrentPlayer.CriticalProb, _parentCore.CurrentPlayer.EquipedWeapon.CriticalProb);
-            Console.WriteLine("크리티컬 데미지 : {0}%  ", _parentCore.CurrentPlayer.CriticalPower);
-            Console.Write("무기 숙련도 : {0}  ", _parentCore.CurrentPlayer.WeaponSkilled);
-            DevFunctions.WriteLineColored("*무기 숙련도가 높을수록 출혈, 회피, 기절 확률이 증가합니다.", ConsoleColor.DarkRed);
-            Console.WriteLine("방어력 : {0}  ", _parentCore.CurrentPlayer.DefPower);
             Console.WriteLine("체력 : {0} / {1}  ", _parentCore.CurrentPlayer.CurrentHP, _parentCore.CurrentPlayer.MaxHP);
             Console.WriteLine("경험치 : {0} / {1}  ", _parentCore.CurrentPlayer.CurrentEXP, _parentCore.CurrentPlayer.MaxEXP);
+
+            Console.Write("공격력 : {0}  ", _parentCore.CurrentPlayer.AttPower);
+            DevFunctions.WriteLineColored("*무기의 공격력을 합한 수치입니다.", ConsoleColor.DarkRed);
+            Console.WriteLine("방어력 : {0}  ", _parentCore.CurrentPlayer.DefPower);
+
+            Console.Write("크리티컬 확률 : {0}%  ", _parentCore.CurrentPlayer.CriticalProb_100);
+            DevFunctions.WriteLineColored("*무기의 크리티컬 확률을 합한 수치입니다.", ConsoleColor.DarkRed);
+
+            Console.WriteLine("크리티컬 데미지 : {0}%  ", _parentCore.CurrentPlayer.CriticalPower_100);
+            
+            Console.Write("무기 숙련도 : {0}  ", _parentCore.CurrentPlayer.WeaponSkilled);
+            DevFunctions.WriteLineColored("*무기 숙련도가 높을수록 출혈, 회피, 기절 확률이 증가합니다.", ConsoleColor.DarkRed);
+            
             Console.WriteLine();
         }
 
@@ -195,39 +203,6 @@ namespace C_Study
         {
             _shopMsg = new Tuple<string, ConsoleColor>("소지 금액이 모자랍니다.", ConsoleColor.Red);
         }
-
-        private void SelectMonster()
-        {
-            DevFunctions.WriteLineColored("전투하고 싶은 몬스터를 선택하세요.", ConsoleColor.DarkCyan);
-            Console.WriteLine();
-
-            Console.WriteLine("1. 고블린 (적정 레벨 : 1)");
-            Console.WriteLine("2. 오우거 (적정 레벨 : 5)");
-            Console.WriteLine("3. 드래곤 (적정 레벨 : 10)");
-            Console.WriteLine("4. 이전으로 돌아간다.");
-
-            string input = Console.ReadLine();
-
-            if (DevFunctions.IsNumeric(input) == false)
-            {
-                return;
-            }
-
-            if (input.Length > 1)
-            {
-                return;
-            }
-
-            int toInt = int.Parse(input);
-
-            switch (toInt)
-            {
-                case 4:
-                    _selectFunc = new SelectFunc(SelectMenu);
-                    break;
-            }
-        }
-
         private void SelectMenu()
         {
             Console.WriteLine("1. 캐릭터 정보를 확인한다.");
@@ -271,7 +246,8 @@ namespace C_Study
                     break;
                 case 4:
                     _updateFunc = null;
-                    _selectFunc = new SelectFunc(SelectMonster);
+                    _selectFunc = new SelectFunc(SelectMenu);
+                    _parentCore.CurrentLevel = LevelType.Fight; 
                     break;
                 case 5:
                     Environment.Exit(0);

@@ -41,6 +41,10 @@ namespace C_Study
             get { return _criticalProb; }
             protected set { _criticalProb = value; }
         }
+        public float CriticalProb_100
+        {
+            get { return _criticalProb * 100; }
+        }
 
         private int _attPower;
         private float _criticalProb;
