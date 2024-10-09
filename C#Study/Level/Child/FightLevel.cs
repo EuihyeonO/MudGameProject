@@ -10,28 +10,33 @@ namespace C_Study
 {
     public class FightLevel : GameLevel
     {
-        public override void Update()
-        {
-            Console.Clear();
-            
-            if(SelectedMonster == null)
-            {
-                SelectMonster();
-            }
-            else
-            {
-                Fight();
-            }
-        }
-
         public FightLevel(GameCore parrentCore)
         {
             _parentCore = parrentCore;
-            _playerLog = null;
-            _monsterLog = null;
+
+  
         }
 
-        public void Fight()
+        public override void LevelStart()
+        {
+            _playerLog = null;
+            _monsterLog = null;
+
+            SelectedMonster = null;
+
+            _messageFunc = new DMessageFunc(Message_FightMonster);
+            _selectFunc = new DSelectFunc(Select_FightMonster);
+        }
+
+        public override void LevelEnd()
+        {
+            _playerLog = null;
+            _monsterLog = null;
+
+            SelectedMonster = null;
+        }
+
+        public void Message_Fight()
         {
             if(_selectedMonster == null)
             {
@@ -58,8 +63,6 @@ namespace C_Study
             else
             {
                 WriteFightLog();
-                SelectBehavior();
-                MonsterBehavior();
             }
         }
 
@@ -78,7 +81,7 @@ namespace C_Study
             _monsterLog = null;
             _playerLog = null;
 
-            _parentCore.CurrentLevel = LevelType.Menu;
+            _parentCore.LevelChange(this, LevelType.Menu);
         }
         private void Lose()
         {
@@ -92,9 +95,8 @@ namespace C_Study
             _playerLog = null;
 
             _parentCore.CurrentPlayer.CurrentHP = 1;
-            _parentCore.CurrentLevel = LevelType.Menu;
+            _parentCore.LevelChange(this, LevelType.Menu);
         }
-
 
         private void WriteFightLog()
         {
@@ -139,6 +141,8 @@ namespace C_Study
                     PlayerAttack();
                     break;
             }
+
+            MonsterBehavior();
         }
 
         private void PlayerAttack()
@@ -158,11 +162,13 @@ namespace C_Study
 
             _selectedMonster.CurrentHP -= Damage;
         }
+
         private void MonsterBehavior()
         {
             if(_selectedMonster.CurrentHP <= 0)
             {
                 _monsterLog = "사망하였습니다.";
+                _selectFunc = null;
                 return;
             }
 
@@ -180,16 +186,18 @@ namespace C_Study
             _monsterLog = "플레이어에게 공격 : " + CriticalMsg + Damage.ToString() + "의 피해를 입혔습니다.";
 
             _parentCore.CurrentPlayer.CurrentHP -= Damage;
+
+            if(_parentCore.CurrentPlayer.CurrentHP <= 0)
+            {
+                _selectFunc = null;
+            }
         }
 
-        private void SelectMonster()
+        private void Select_FightMonster()
         {
-            DevFunctions.WriteLineColored("전투하고 싶은 몬스터를 선택하세요.", ConsoleColor.DarkCyan);
-            Console.WriteLine();
-
             Console.WriteLine("1. 고블린 (적정 레벨 : 1)");
-            Console.WriteLine("2. 오우거 (적정 레벨 : 5)");
-            Console.WriteLine("3. 드래곤 (적정 레벨 : 10)");
+            //Console.WriteLine("2. 오우거 (적정 레벨 : 5)");
+            //Console.WriteLine("3. 드래곤 (적정 레벨 : 10)");
             Console.WriteLine("4. 이전으로 돌아간다.");
 
             string input = Console.ReadLine();
@@ -212,10 +220,23 @@ namespace C_Study
                     _selectedMonster = new Goblin();
                     break;
                 case 4:
-                    _parentCore.CurrentLevel = LevelType.Menu;
+                    _parentCore.LevelChange(this, LevelType.Menu);
                     _selectedMonster = null;
-                    break;
+
+                    _messageFunc = new DMessageFunc(Message_FightMonster);
+                    _selectFunc = new DSelectFunc(Select_FightMonster);
+
+                    return;
             }
+
+            _messageFunc = new DMessageFunc(Message_Fight);
+            _selectFunc = new DSelectFunc(SelectBehavior);
+        }
+
+        private void Message_FightMonster()
+        {
+            DevFunctions.WriteLineColored("전투하고 싶은 몬스터를 선택하세요.", ConsoleColor.DarkCyan);
+            Console.WriteLine();       
         }
 
         public static Monster SelectedMonster

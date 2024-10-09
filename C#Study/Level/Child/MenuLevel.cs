@@ -11,29 +11,21 @@ namespace C_Study
 {
     public class MenuLevel : GameLevel
     {
-        private delegate void UpdateFunc();
-        private delegate void SelectFunc();
 
         public MenuLevel(GameCore parrentCore)
         {
             _parentCore = parrentCore;
-
-            _selectFunc = new SelectFunc(SelectMenu);
         }
 
-        public override void Update()
+        public override void LevelStart()
         {
-            Console.Clear();
-
-            if (_updateFunc != null)
-            {
-                _updateFunc();
-            }
-
-            if (_selectFunc != null)
-            {
-                _selectFunc();
-            }
+            _messageFunc = null;
+            _selectFunc = new DSelectFunc(SelectMenu);
+            _shopMsg = null;
+        }
+        public override void LevelEnd()
+        {
+            _shopMsg = null;
         }
 
         private void WriteStatus()
@@ -163,8 +155,8 @@ namespace C_Study
                     BuyItem(ItemName.필살의영약);
                     break;
                 case 4:
-                    _updateFunc = null;
-                    _selectFunc = new SelectFunc(SelectMenu);
+                    _messageFunc = null;
+                    _selectFunc = new DSelectFunc(SelectMenu);
                     _shopMsg = null;
                     break;
             }
@@ -233,21 +225,22 @@ namespace C_Study
             switch (toInt)
             {
                 case 1:
-                    _updateFunc = new UpdateFunc(WriteStatus);
-                    _selectFunc = new SelectFunc(SelectMenu);
+                    _messageFunc = new DMessageFunc(WriteStatus);
+                    _selectFunc = new DSelectFunc(SelectMenu);
                     break;
                 case 2:
-                    _updateFunc = new UpdateFunc(WriteInventory);
-                    _selectFunc = new SelectFunc(SelectMenu);
+                    _messageFunc = new DMessageFunc(WriteInventory);
+                    _selectFunc = new DSelectFunc(SelectMenu);
                     break;
                 case 3:
-                    _updateFunc = new UpdateFunc(WriteShopMsg);
-                    _selectFunc = new SelectFunc(SelectShopItem);
+                    _messageFunc = new DMessageFunc(WriteShopMsg);
+                    _selectFunc = new DSelectFunc(SelectShopItem);
                     break;
                 case 4:
-                    _updateFunc = null;
-                    _selectFunc = new SelectFunc(SelectMenu);
-                    _parentCore.CurrentLevel = LevelType.Fight; 
+                    _messageFunc = null;
+                    _selectFunc = new DSelectFunc(SelectMenu);
+
+                    _parentCore.LevelChange(this, LevelType.Fight);
                     break;
                 case 5:
                     Environment.Exit(0);
@@ -255,8 +248,6 @@ namespace C_Study
             }
         }
 
-        private UpdateFunc _updateFunc;
-        private SelectFunc _selectFunc;
         private Tuple<string, ConsoleColor> _shopMsg;
     }
 }

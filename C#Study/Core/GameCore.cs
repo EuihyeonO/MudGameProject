@@ -20,18 +20,17 @@ namespace C_Study
 
     public class GameCore
     {
-
         public void Start()
         {
             _player = new Player();
-            _levelType = LevelType.Start;
-
             _levels = new Dictionary<LevelType, GameLevel>();
 
             _levels.Add(LevelType.Start, new StartLevel(this));
             _levels.Add(LevelType.Setting, new SettingLevel(this));
             _levels.Add(LevelType.Menu, new MenuLevel(this));
             _levels.Add(LevelType.Fight, new FightLevel(this));
+
+            LevelChange(null, LevelType.Start);
         }
 
         public void Update()
@@ -40,6 +39,21 @@ namespace C_Study
             {
                 _levels[_levelType].Update();
             }
+        }
+
+        public void LevelChange(GameLevel current, LevelType next)
+        {
+            if(current != null)
+            {
+                current.LevelEnd();
+            }
+
+            if(_levels[next] !=null)
+            {
+                _levels[next].LevelStart();
+            }
+
+            CurrentLevel = next;
         }
 
         public void End()

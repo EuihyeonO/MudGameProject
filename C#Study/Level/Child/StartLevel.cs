@@ -13,7 +13,18 @@ namespace C_Study
             _parentCore = parrentCore;
         }
 
-        public override void Update()
+        public override void LevelStart()
+        {
+            _messageFunc = new DMessageFunc(MessageFunc);
+            _selectFunc = new DSelectFunc(SelectFunc);
+        }
+
+        public override void LevelEnd()
+        {
+
+        }
+
+        public void MessageFunc()
         {
             Console.Clear();
 
@@ -33,7 +44,10 @@ namespace C_Study
             Console.WriteLine();
 
             Console.WriteLine("모험을 시작하시겠습니까?");
+        }
 
+        public void SelectFunc()
+        {
             DevFunctions.WriteLineColored("1 : YES", ConsoleColor.Blue);
             DevFunctions.WriteLineColored("2 : NO", ConsoleColor.Red);
 
@@ -49,13 +63,12 @@ namespace C_Study
             switch (toInt)
             {
                 case 1:
-                    _parentCore.CurrentLevel = LevelType.Setting;
+                    _parentCore.LevelChange(this, LevelType.Setting);
                     break;
                 case 2:
                     Environment.Exit(0);
                     break;
             }
         }
-
     }
 }
